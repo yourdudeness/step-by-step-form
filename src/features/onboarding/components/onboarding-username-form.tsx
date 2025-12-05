@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useOnboardingStore } from "@/app/onboarding/store";
+import { useEffect } from "react";
 
 const onboardingUsernameSchema = onboardingSchema.pick({
   username: true,
@@ -27,10 +28,11 @@ const onboardingUsernameSchema = onboardingSchema.pick({
 type OnboardingUsernameSchema = z.infer<typeof onboardingUsernameSchema>;
 
 export default function OnboardingUsernameForm() {
-    const firstName = useOnboardingStore((state) => state.firstName);
-    const lastName = useOnboardingStore((state) => state.lastName);
-    const password = useOnboardingStore((state) => state.password);
-    const repeatPassword = useOnboardingStore((state) => state.repeatPassword);
+  const router = useRouter();
+  const firstName = useOnboardingStore((state) => state.firstName);
+  const lastName = useOnboardingStore((state) => state.lastName);
+  const password = useOnboardingStore((state) => state.password);
+  const repeatPassword = useOnboardingStore((state) => state.repeatPassword);
 
   const form = useForm<OnboardingUsernameSchema>({
     resolver: zodResolver(onboardingUsernameSchema),
@@ -42,13 +44,27 @@ export default function OnboardingUsernameForm() {
 
   const onSubmit = (data: OnboardingUsernameSchema) => {
     console.log({
-        ...data,
-        firstName,
-        lastName,
-        password,
-        repeatPassword,
-    })
+      ...data,
+      firstName,
+      lastName,
+      password,
+      repeatPassword,
+    });
   };
+
+  useEffect(() => {
+    if (!useOnboardingStore.persist.hasHydrated) return;
+    if (!firstName || !lastName || !password || !repeatPassword) {
+      router.push("/onboarding/password");
+    }
+  }, [
+    useOnboardingStore.persist.hasHydrated,
+    firstName,
+    lastName,
+    password,
+    repeatPassword,
+    router,
+  ]);
 
   return (
     <Form {...form}>

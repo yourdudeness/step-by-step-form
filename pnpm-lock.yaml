@@ -26,6 +26,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      immer:
+        specifier: ^11.0.1
+        version: 11.0.1
       lucide-react:
         specifier: ^0.473.0
         version: 0.473.0(react@19.0.0-rc-5d19e1c8-20240923)
@@ -52,7 +55,7 @@ importers:
         version: 3.24.1
       zustand:
         specifier: ^5.0.3
-        version: 5.0.3(@types/react@18.2.73)(react@19.0.0-rc-5d19e1c8-20240923)
+        version: 5.0.3(@types/react@18.2.73)(immer@11.0.1)(react@19.0.0-rc-5d19e1c8-20240923)
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -1115,6 +1118,9 @@ packages:
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
+
+  immer@11.0.1:
+    resolution: {integrity: sha512-naDCyggtcBWANtIrjQEajhhBEuL9b0Zg4zmlWK2CzS6xCWSE39/vvf4LqnMjUAWHBhot4m9MHCM/Z+mfWhUkiA==}
 
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -3119,6 +3125,8 @@ snapshots:
 
   ignore@5.3.2: {}
 
+  immer@11.0.1: {}
+
   import-fresh@3.3.0:
     dependencies:
       parent-module: 1.0.1
@@ -4001,7 +4009,8 @@ snapshots:
 
   zod@3.24.1: {}
 
-  zustand@5.0.3(@types/react@18.2.73)(react@19.0.0-rc-5d19e1c8-20240923):
+  zustand@5.0.3(@types/react@18.2.73)(immer@11.0.1)(react@19.0.0-rc-5d19e1c8-20240923):
     optionalDependencies:
       '@types/react': 18.2.73
+      immer: 11.0.1
       react: 19.0.0-rc-5d19e1c8-20240923
