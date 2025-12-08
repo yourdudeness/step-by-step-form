@@ -1,9 +1,12 @@
+import { fetchForm } from "@/app/api/fetch-form";
 import MultiStepForm from "@/features/onboarding/components/multi-step-form";
-import { use, useEffect, useState } from "react";
-import { fetchForm } from "./api/fetch-form";
 
 export default async function Home() {
   const formData = await fetchForm();
 
-  return <MultiStepForm formData={formData} />;
+  return (
+    <>
+      <MultiStepForm formData={formData} />
+    </>
+  );
 }
