@@ -15,11 +15,12 @@ const MultiStepForm = ({ formData }: Props) => {
   const currentPage = formData.pages[currentStep];
   const maxStep = formData.pages.length;
 
-  //   const schema = createValidationSchema(currentPage.fields);
+  const schema = createValidationSchema(currentPage.fields);
 
   const form = useForm({
-    // resolver: zodResolver(schema),
+    resolver: zodResolver(schema),
     defaultValues: {},
+    mode: "onChange",
   });
 
   const handleBack = () => {
@@ -28,8 +29,9 @@ const MultiStepForm = ({ formData }: Props) => {
     }
   };
 
-  const handleSubmit = () => {
-    if (currentStep !== maxStep - 1) {
+  const handleSubmit = async () => {
+    const isValid = await form.trigger();
+    if (currentStep !== maxStep - 1 && isValid) {
       setCurrentStep((state) => state + 1);
     }
   };
@@ -37,7 +39,7 @@ const MultiStepForm = ({ formData }: Props) => {
     <div>
       <Form {...form}>
         <form className="w-[300px] space-y-8">
-          {currentPage.fields.map((field: []) => {
+          {currentPage.fields.map((field: any) => {
             return <FieldRenderer key={field.id} form={form} field={field} />;
           })}
         </form>
