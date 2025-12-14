@@ -1,7 +1,8 @@
+import { FormDataConfig } from '@/features/onboarding/types';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const formData = {
+  const formData:FormDataConfig = {
     title: "Регистрация пользователя",
     pages: [
       {

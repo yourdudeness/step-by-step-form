@@ -10,14 +10,15 @@ import { Label } from "@/components/ui/label";
 import { Radio, RadioGroup } from "@/components/ui/radio";
 import { Checkbox } from "@radix-ui/react-checkbox";
 import { UseFormReturn } from "react-hook-form";
+import { FieldConfig } from "../types";
 
 type Props = {
-  field: any;
+  field: FieldConfig;
   form: UseFormReturn<any>;
 };
 
 export function FieldRenderer({ field, form }: Props) {
-  console.log(field, "field in renderer");
+  console.log("Rendering field:", field);
   switch (field.type) {
     case "text":
       return (
@@ -38,7 +39,6 @@ export function FieldRenderer({ field, form }: Props) {
           )}
         />
       );
-
     case "number":
       return (
         <FormField
@@ -58,7 +58,6 @@ export function FieldRenderer({ field, form }: Props) {
           )}
         />
       );
-
     case "password":
       return (
         <FormField

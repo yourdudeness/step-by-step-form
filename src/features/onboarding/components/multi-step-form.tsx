@@ -3,13 +3,16 @@ import { Form } from "@/components/ui/form";
 import { createValidationSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FieldRenderer } from "./field-renderer";
 import { Button } from "@/components/ui/button";
+import { FieldConfig, FormDataConfig } from "../types";
+import { checkVisibilityCondition } from "@/lib/visibilityCondition";
 
 type Props = {
-  formData: any;
+  formData: FormDataConfig;
 };
+
 const MultiStepForm = ({ formData }: Props) => {
   const [currentStep, setCurrentStep] = useState(0);
   const currentPage = formData.pages[currentStep];
@@ -35,11 +38,18 @@ const MultiStepForm = ({ formData }: Props) => {
       setCurrentStep((state) => state + 1);
     }
   };
+
+  const valuesForm = useWatch({ control: form.control });
+
+  checkVisibilityCondition({ fields: currentPage.fields, valuesForm });
+
+  console.log("Form Values:", valuesForm);
+
   return (
     <div>
       <Form {...form}>
         <form className="w-[300px] space-y-8">
-          {currentPage.fields.map((field: any) => {
+          {currentPage.fields.map((field: FieldConfig) => {
             return <FieldRenderer key={field.id} form={form} field={field} />;
           })}
         </form>

@@ -1,6 +1,5 @@
 export const fetchForm = async () => {
-  const baseUrl = "http://localhost:3000";
-  const response = await fetch(`${baseUrl}/api/form`);
+  const response = await fetch(`${process.env.API_URL}/form`);
   if (!response.ok) {
     throw new Error("Failed to fetch form");
   }
