@@ -8,9 +8,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Radio, RadioGroup } from "@/components/ui/radio";
-import { Checkbox } from "@radix-ui/react-checkbox";
+
 import { UseFormReturn } from "react-hook-form";
 import { FieldConfig } from "../types";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type Props = {
   field: FieldConfig;
@@ -18,7 +19,6 @@ type Props = {
 };
 
 export function FieldRenderer({ field, form }: Props) {
-  console.log("Rendering field:", field);
   switch (field.type) {
     case "text":
       return (
@@ -35,6 +35,7 @@ export function FieldRenderer({ field, form }: Props) {
                   {...controllerField}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -54,6 +55,7 @@ export function FieldRenderer({ field, form }: Props) {
                   {...controllerField}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -73,6 +75,7 @@ export function FieldRenderer({ field, form }: Props) {
                   {...controllerField}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -118,13 +121,14 @@ export function FieldRenderer({ field, form }: Props) {
           name={field.id}
           render={({ field: controllerField }) => (
             <FormItem>
-              <FormLabel>{field.label}</FormLabel>
               <FormControl>
-                <Checkbox
-                  checked={controllerField.value}
-                  onCheckedChange={controllerField.onChange}
-                />
+                  <Checkbox
+                    checked={controllerField.value}
+                    onCheckedChange={controllerField.onChange}
+                    {...controllerField}
+                  />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

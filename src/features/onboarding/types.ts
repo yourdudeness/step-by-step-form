@@ -12,12 +12,17 @@ export type VisibleConditionType = {
   value: string | boolean;
 };
 
+export type OptionsType = {
+  value: string;
+  label: string;
+};
+
 export type FieldConfig = {
   id: string;
   label: string;
   placeholder?: string;
   type: "text" | "number" | "password" | "radio" | "checkbox";
-  options?: { value: string; label: string }[];
+  options?: OptionsType[];
   validation?: ValidationConfig;
   visibilityCondition?: VisibleConditionType;
 };
@@ -27,7 +32,6 @@ export type FormDataPages = {
   title: string;
   fields: FieldConfig[];
 };
-
 
 
 export type FormDataConfig = {

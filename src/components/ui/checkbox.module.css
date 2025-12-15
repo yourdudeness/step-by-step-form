@@ -1,0 +1,46 @@
+.Root {
+  all: unset;
+  background-color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d1d5db;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+  }
+
+  &:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  &[data-state="checked"] {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+  }
+}
+
+.Indicator {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Root svg {
+  width: 16px;
+  height: 16px;
+}
+
+.Label {
+  color: white;
+  padding-left: 15px;
+  font-size: 15px;
+  line-height: 1;
+}
