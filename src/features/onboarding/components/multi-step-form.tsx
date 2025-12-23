@@ -1,13 +1,14 @@
 "use client";
 import { Form } from "@/components/ui/form";
 import { createValidationSchema } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { FieldRenderer } from "./field-renderer";
 import { Button } from "@/components/ui/button";
 import { FieldConfig, FormDataConfig } from "../types";
 import { checkVisibilityCondition } from "@/lib/visibilityCondition";
+import { useOnboardingStore } from "@/app/onboarding/store";
+import { submitOnboarding } from "@/lib/api";
 
 type Props = {
   formData: FormDataConfig;
@@ -16,6 +17,12 @@ type Props = {
 const MultiStepForm = ({ formData }: Props) => {
   const [currentStep, setCurrentStep] = useState(0);
   const currentPage = formData.pages[currentStep];
+  const {
+    formData: savedData,
+    _hasHydrated,
+    setFormData,
+    clearFormData,
+  } = useOnboardingStore();
   const maxStep = formData.pages.length;
 
   const form = useForm<Record<string, unknown>>({
@@ -28,6 +35,12 @@ const MultiStepForm = ({ formData }: Props) => {
   const visibleFields = useMemo(() => {
     return checkVisibilityCondition({ fields: currentPage.fields, valuesForm });
   }, [currentPage.fields, valuesForm]);
+
+  useEffect(() => {
+    if (_hasHydrated && Object.keys(savedData).length > 0) {
+      form.reset(savedData);
+    }
+  }, [_hasHydrated]);
 
   const validateVisibleFields = async () => {
     visibleFields.forEach((f) => form.clearErrors(f.id));
@@ -62,11 +75,23 @@ const MultiStepForm = ({ formData }: Props) => {
   const handleSubmit = async () => {
     const ok = await validateVisibleFields();
     if (!ok) return;
+    const currentFormData = form.getValues();
+    console.log(currentFormData, "currentFormData");
 
     if (currentStep < maxStep - 1) {
+      setFormData(currentFormData);
       setCurrentStep((s) => s + 1);
     } else {
-      console.log("final submit", form.getValues());
+      setFormData(currentFormData);
+      try {
+        const result = await submitOnboarding(currentFormData);
+        console.log(result, "result");
+        clearFormData();
+        form.reset({});
+        setCurrentStep(0);
+      } catch (error) {
+        console.error("Ошибка сети", error);
+      }
     }
   };
 

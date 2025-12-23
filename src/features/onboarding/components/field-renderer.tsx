@@ -125,6 +125,7 @@ export function FieldRenderer({ field, form }: Props) {
                   <Checkbox
                     checked={controllerField.value}
                     onCheckedChange={controllerField.onChange}
+                    label={field.label}
                     {...controllerField}
                   />
               </FormControl>

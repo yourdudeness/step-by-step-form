@@ -2,10 +2,16 @@ import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import styles from "./checkbox.module.css";
 
+type CheckboxProps = React.ComponentPropsWithoutRef<
+  typeof CheckboxPrimitive.Root
+> & {
+  label?: string;
+};
+
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ ...props }, ref) => (
+  CheckboxProps
+>(({ label, ...props }, ref) => (
   <div style={{ display: "flex", alignItems: "center" }}>
     <CheckboxPrimitive.Root ref={ref} className={styles.Root} {...props}>
       <CheckboxPrimitive.Indicator className={styles.Indicator}>
@@ -26,7 +32,7 @@ const Checkbox = React.forwardRef<
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
     <label className={styles.Label} htmlFor={props.id}>
-      Accept terms and conditions.
+      {label}
     </label>
   </div>
 ));
